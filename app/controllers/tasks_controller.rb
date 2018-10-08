@@ -3,14 +3,14 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   
   def index
-    @tasks = Task.all
+    @tasks = Task.all.page(params[:page]).per(5)
   end
 
   def show
   end
 
   def new
-    @task = Task.new(content: '例：砂糖を買う') 
+    @task = Task.new
   end
 
   def create
@@ -46,7 +46,6 @@ class TasksController < ApplicationController
     redirect_to tasks_url
   end
   
-end
 
 private
 
@@ -58,3 +57,5 @@ private
   def task_params
     params.require(:task).permit(:content, :status)
   end
+  
+end
